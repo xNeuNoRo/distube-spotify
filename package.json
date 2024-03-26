@@ -76,7 +76,7 @@
     "build": "tsup",
     "build:check": "tsc --noEmit",
     "update": "ncu -u && bun update",
-    "postinstall": "husky install",
+    "postinstall": "npx husky install",
     "prepack": "bun run build && pinst -d",
     "postpack": "pinst -e"
   },
