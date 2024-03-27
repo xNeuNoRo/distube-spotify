@@ -230,7 +230,7 @@ export class SpotifyPlugin extends CustomPlugin {
 
                 const queue_check = DT.getQueue(voiceChannel);
                 if (queue_check) await q.addToQueue(songsToAdd, !skip && position > 0 ? position + 1 : position);
-                else q = await DT.queues.create(voiceChannel, songsToAdd, textChannel), newQueueCreated = q;
+                else q = await DT.queues.create(voiceChannel, songsToAdd, textChannel) as Queue, newQueueCreated = q;
 
                 batchResults = [];
                 tmp_songs.clear();
@@ -240,7 +240,7 @@ export class SpotifyPlugin extends CustomPlugin {
               return bluebird.delay(Global.requestDelay);
             }, { concurrency: Global.songsPerRequest });
 
-            results.sort((a, b) => {
+            results.sort((a: any, b: any) => {
               let indexA = cache.findIndex(item => item.url_result === a.url);
               let indexB = cache.findIndex(item => item.url_result === b.url);
               return cache[indexA].initial_index - cache[indexB].initial_index;
@@ -260,7 +260,7 @@ export class SpotifyPlugin extends CustomPlugin {
           const queue_check = DT.getQueue(voiceChannel);
           if (queue_check) q.songs.sort((a: any, b: any) => playlist.songs.findIndex((ps: any) => ps.url === a.url) - playlist.songs.findIndex((ps: any) => ps.url === b.url));
           else if (queue_check && playlist.songs.filter((s: any) => !query_success.has(s.url)).length) q.addToQueue(playlist.songs.filter((s: any) => !query_success.has(s.url)), !skip && position > 0 ? position + 1 : position);
-          else if (!queue_check) q = await DT.queues.create(voiceChannel, playlist.songs, textChannel), newQueueCreated = q;
+          else if (!queue_check) q = await DT.queues.create(voiceChannel, playlist.songs, textChannel) as Queue, newQueueCreated = q;
         }
         playlist.songs.unshift(fs);
       };
