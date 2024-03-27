@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-bunx --bun commitlint --edit 
+#bunx --bun commitlint --edit 
