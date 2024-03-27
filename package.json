@@ -74,9 +74,10 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --write \"**/*.{js,ts,json,yml,yaml,md}\"",
     "build": "tsup",
+    "build:postinstall": "tsup src/index.ts",
     "build:check": "tsc --noEmit",
     "update": "ncu -u && bun update",
-    "postinstall": "npx husky install && npm install typescript@5.4.2 && npm run build",
+    "postinstall": "npx husky install && npm install typescript@5.4.2 && npm run build:postinstall",
     "prepack": "bun run build && pinst -d",
     "postpack": "pinst -e"
   },
