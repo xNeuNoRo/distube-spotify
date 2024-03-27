@@ -75,9 +75,9 @@
     "prettier": "prettier --write \"**/*.{js,ts,json,yml,yaml,md}\"",
     "build": "tsup",
     "build:check": "tsc --noEmit",
-    "update": "ncu -u && npm update",
+    "update": "ncu -u && bun update",
     "postinstall": "npx husky install",
-    "prepack": "npm run build && pinst -d",
+    "prepack": "bun run build && pinst -d",
     "postpack": "pinst -e"
   },
   "typings": "./dist/index.d.ts"
