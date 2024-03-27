@@ -21,10 +21,23 @@ A DisTube custom plugin for supporting Spotify URL.
 
 This plugin grabs the songs on Spotify then searches on YouTube and plays with DisTube.
 
+(-) Fork Features:
+
+Added new method
+-maxPlaylistTracks
+-songsPerRequest
+-requestDelay
+
+(-) Fork Changes:
+
++The playSong event is always emitted [regardless of the emitEventsAfterFetching parameter] before initializing the fetch process for the rest of the songs in the playlist.
++The songs will be automatically added to the queue as each batch is finished and after all the batches are finished they will be sorted.
++A new queue will be created automatically if it is detected that it has ended before completing the process of fetching all the songs.
+
 ## Installation
 
 ```sh
-npm install @distube/spotify@latest
+npm install https://github.com/xNeuNoRo/distube-spotify
 ```
 
 ## Usage
@@ -48,6 +61,9 @@ const distube = new DisTube(client, {
 - `SpotifyPluginOptions.emitEventsAfterFetching`: Default is `false`. Emits `addList` and `playSong` event before or after fetching all the songs.
   > If `false`, DisTube plays the first song -> emits `addList` and `playSong` events -> fetches all the rest\
   > If `true`, DisTube plays the first song -> fetches all the rest -> emits `addList` and `playSong` events
+- `SpotifyPluginOptions.maxPlaylistTrack`: Default is `200`. This is the max songs to fetch per playlist.
+- `SpotifyPluginOptions.songsPerRequest`: Default is `10`. This is the amount of songs to fetch for each batch of requests.
+- `SpotifyPluginOptions.requestDelay`: Default is `1000`. This is the delay for each batch of requests in milliseconds.
 - `SpotifyPluginOptions.api`: (Optional) Spotify API options.
   - `SpotifyPluginOptions.api.clientId`: Client ID of your Spotify application (Optional - Used when the plugin cannot get the credentials automatically)
   - `SpotifyPluginOptions.api.clientSecret`: Client Secret of your Spotify application (Optional - Used when the plugin cannot get the credentials automatically)
@@ -59,6 +75,9 @@ const distube = new DisTube(client, {
 new SpotifyPlugin({
   parallel: true,
   emitEventsAfterFetching: false,
+  maxPlaylistTrack: 1500,
+  songsPerRequest: 20,
+  requestDelay: 1000,
   api: {
     clientId: "SpotifyAppClientID",
     clientSecret: "SpotifyAppClientSecret",
