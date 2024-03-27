@@ -45,6 +45,7 @@ export class SpotifyPlugin extends CustomPlugin {
       "SpotifyPluginOptions"
       );
     this.parallel = options.parallel ?? true;
+    console.log(this.parallel);
     if (typeof this.parallel !== "boolean") {
       throw new DisTubeError("INVALID_TYPE", "boolean", this.parallel, "SpotifyPluginOptions.parallel");
     }
