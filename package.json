@@ -74,10 +74,9 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --write \"**/*.{js,ts,json,yml,yaml,md}\"",
     "build": "tsup",
-    "build:postinstall": "npm install && tsup",
     "build:check": "tsc --noEmit",
     "update": "ncu -u && bun update",
-    "postinstall": "npx husky install && npm run build:postinstall",
+    "postinstall": "npx husky install",
     "prepack": "bun run build && pinst -d",
     "postpack": "pinst -e"
   },
