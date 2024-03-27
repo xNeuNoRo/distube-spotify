@@ -17,6 +17,9 @@
 
 A DisTube custom plugin for supporting Spotify URL.
 
+-NeuNoRo Fork  
+I do not own this project, this is a fork intended to use my changes more easily in my project. All rights are reserved to [Skick](https://github.com/skick1234)
+
 ## Feature
 
 This plugin grabs the songs on Spotify then searches on YouTube and plays with DisTube.
