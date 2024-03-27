@@ -240,7 +240,6 @@ var _SpotifyPlugin = class _SpotifyPlugin extends import_distube2.CustomPlugin {
       "SpotifyPluginOptions"
     );
     this.parallel = options.parallel ?? true;
-    console.log(this.parallel);
     if (typeof this.parallel !== "boolean") {
       throw new import_distube2.DisTubeError("INVALID_TYPE", "boolean", this.parallel, "SpotifyPluginOptions.parallel");
     }
