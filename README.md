@@ -21,18 +21,20 @@ A DisTube custom plugin for supporting Spotify URL.
 
 This plugin grabs the songs on Spotify then searches on YouTube and plays with DisTube.
 
-(-) Fork Features:
+## Fork Changes
 
-Added new method
--maxPlaylistTracks
--songsPerRequest
--requestDelay
+### Features:
 
-(-) Fork Changes:
+Added new methods:  
+- maxPlaylistTracks
+- songsPerRequest
+- requestDelay
 
-+The playSong event is always emitted [regardless of the emitEventsAfterFetching parameter] before initializing the fetch process for the rest of the songs in the playlist.
-+The songs will be automatically added to the queue as each batch is finished and after all the batches are finished they will be sorted.
-+A new queue will be created automatically if it is detected that it has ended before completing the process of fetching all the songs.
+### Changes:
+
+- The playSong event is always emitted [regardless of the emitEventsAfterFetching parameter] before initializing the fetch process for the rest of the songs in the playlist.
+- The songs will be automatically added to the queue as each batch is finished and after all the batches are finished they will be sorted.
+- A new queue will be created automatically if it is detected that it has ended before completing the process of fetching all the songs.
 
 ## Installation
 
