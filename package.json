@@ -8,7 +8,6 @@
   },
   "main": "./dist/index.js",
   "dependencies": {
-    "typescript": "^5.4.2",
     "bluebird": "^3.7.2",
     "spotify-uri": "^4.0.1",
     "spotify-url-info": "^3.2.13",
@@ -77,7 +76,7 @@
     "build": "tsup",
     "build:check": "tsc --noEmit",
     "update": "ncu -u && bun update",
-    "postinstall": "npx husky install && npm run build",
+    "postinstall": "npx husky install && npm install typescript@5.4.2 && npm run build",
     "prepack": "bun run build && pinst -d",
     "postpack": "pinst -e"
   },
