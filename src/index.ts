@@ -156,9 +156,10 @@ export class SpotifyPlugin extends CustomPlugin {
     const { member, textChannel, skip, position, metadata } = Object.assign({ position: 0 }, options);
     if (data.type === "track") {
       const query = `${data.name} ${data.artists.map((a: any) => a.name).join(" ")}`;
-      const result = await this.search(query, metadata);
+      const result = await this.search(query);
       if (!result) throw new DisTubeError("SPOTIFY_PLUGIN_NO_RESULT", `Cannot find "${query}" on YouTube.`);
       result.member = member;
+      result.metadata = metadata;
       await DT.play(voiceChannel, result, options);
     } else {
       const { name, thumbnail, tracks } = data;
@@ -169,9 +170,10 @@ export class SpotifyPlugin extends CustomPlugin {
       const getFirstSong = async () => {
         const firstQuery = queries.shift();
         if (!firstQuery) return;
-        const result = await this.search(firstQuery, metadata);
+        const result = await this.search(firstQuery);
         if (!result) return;
         result.member = member;
+        result.metadata = metadata;
         firstSong = result;
       };
       while (!firstSong) await getFirstSong();
@@ -196,7 +198,7 @@ export class SpotifyPlugin extends CustomPlugin {
           const results: (Song | null)[] = [];
           const query_success = new Set();
           if (this.parallel) {
-            //results = await Promise.all(queries.map(query => this.search(query, metadata)));
+            //results = await Promise.all(queries.map(query => this.search(query)));
             interface CacheItem {
               url_result?: any;
               initial_index?: any;
@@ -212,7 +214,7 @@ export class SpotifyPlugin extends CustomPlugin {
 
             // NEW METHOD
             await bluebird.map(queries, async (query: any, index: any) => {
-              const search_result = await this.search(query, metadata);
+              const search_result = await this.search(query);
               totalProcessed++;
               if (!search_result) return bluebird.delay(this.requestDelay);
               results.push(search_result);
@@ -235,7 +237,7 @@ export class SpotifyPlugin extends CustomPlugin {
                   }
                 })
                  .map(r => {
-                  const s = new Song(r, { member, metadata });
+                  const s = new Song(r, { member });
                   s.playlist = playlist;
                   return s;
                 });
@@ -259,13 +261,14 @@ export class SpotifyPlugin extends CustomPlugin {
             });
           } else {
             for (let i = 0; i < queries.length; i++) {
-              results[i] = await this.search(queries[i], metadata);
+              results[i] = await this.search(queries[i]);
             }
           }
 
           playlist.songs = results.filter(isTruthy).map(s => {
             s.playlist = playlist;
             s.member = member;
+            s.metadata = metadata;
             return s;
           });
 
@@ -318,9 +321,9 @@ export class SpotifyPlugin extends CustomPlugin {
     }
   }
 
-  async search(query: string, metadata: any) {
+  async search(query: string) {
     try {
-      return new Song((await this.distube.search(query, { limit: 1 }))[0], { metadata });
+      return new Song((await this.distube.search(query, { limit: 1 }))[0]);
     } catch {
       return null;
     }

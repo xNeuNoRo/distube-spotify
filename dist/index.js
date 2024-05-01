@@ -351,10 +351,11 @@ var _SpotifyPlugin = class _SpotifyPlugin extends import_distube2.CustomPlugin {
     const { member, textChannel, skip, position, metadata } = Object.assign({ position: 0 }, options);
     if (data.type === "track") {
       const query = `${data.name} ${data.artists.map((a) => a.name).join(" ")}`;
-      const result = await this.search(query, metadata);
+      const result = await this.search(query);
       if (!result)
         throw new import_distube2.DisTubeError("SPOTIFY_PLUGIN_NO_RESULT", `Cannot find "${query}" on YouTube.`);
       result.member = member;
+      result.metadata = metadata;
       await DT.play(voiceChannel, result, options);
     } else {
       const { name, thumbnail, tracks } = data;
@@ -364,10 +365,11 @@ var _SpotifyPlugin = class _SpotifyPlugin extends import_distube2.CustomPlugin {
         const firstQuery = queries.shift();
         if (!firstQuery)
           return;
-        const result = await this.search(firstQuery, metadata);
+        const result = await this.search(firstQuery);
         if (!result)
           return;
         result.member = member;
+        result.metadata = metadata;
         firstSong = result;
       }, "getFirstSong");
       while (!firstSong)
@@ -398,7 +400,7 @@ var _SpotifyPlugin = class _SpotifyPlugin extends import_distube2.CustomPlugin {
             let batchCounter = 0;
             let totalProcessed = 0;
             await import_bluebird.default.map(queries, async (query, index) => {
-              const search_result = await this.search(query, metadata);
+              const search_result = await this.search(query);
               totalProcessed++;
               if (!search_result)
                 return import_bluebird.default.delay(this.requestDelay);
@@ -417,7 +419,7 @@ var _SpotifyPlugin = class _SpotifyPlugin extends import_distube2.CustomPlugin {
                     return true;
                   }
                 }).map((r) => {
-                  const s = new import_distube2.Song(r, { member, metadata });
+                  const s = new import_distube2.Song(r, { member });
                   s.playlist = playlist;
                   return s;
                 });
@@ -439,12 +441,13 @@ var _SpotifyPlugin = class _SpotifyPlugin extends import_distube2.CustomPlugin {
             });
           } else {
             for (let i = 0; i < queries.length; i++) {
-              results[i] = await this.search(queries[i], metadata);
+              results[i] = await this.search(queries[i]);
             }
           }
           playlist.songs = results.filter(isTruthy2).map((s) => {
             s.playlist = playlist;
             s.member = member;
+            s.metadata = metadata;
             return s;
           });
           const queue_check = DT.getQueue(voiceChannel);
@@ -498,9 +501,9 @@ var _SpotifyPlugin = class _SpotifyPlugin extends import_distube2.CustomPlugin {
       }
     }
   }
-  async search(query, metadata) {
+  async search(query) {
     try {
-      return new import_distube2.Song((await this.distube.search(query, { limit: 1 }))[0], { metadata });
+      return new import_distube2.Song((await this.distube.search(query, { limit: 1 }))[0]);
     } catch {
       return null;
     }

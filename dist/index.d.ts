@@ -67,7 +67,7 @@ declare class SpotifyPlugin extends CustomPlugin {
     constructor(options?: SpotifyPluginOptions);
     validate(url: string): Promise<boolean>;
     play(voiceChannel: VoiceBasedChannel, url: string, options: PlayOptions): Promise<void>;
-    search(query: string, metadata: any): Promise<Song<any> | null>;
+    search(query: string): Promise<Song<unknown> | null>;
 }
 
 export { SpotifyPlugin, type SpotifyPluginOptions, SpotifyPlugin as default };
