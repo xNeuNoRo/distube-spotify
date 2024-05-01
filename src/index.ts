@@ -237,7 +237,7 @@ export class SpotifyPlugin extends CustomPlugin {
                   }
                 })
                  .map(r => {
-                  const s = new Song(r, { member });
+                  const s = new Song(r, { member, metadata });
                   s.playlist = playlist;
                   return s;
                 });

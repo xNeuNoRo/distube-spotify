@@ -419,7 +419,7 @@ var _SpotifyPlugin = class _SpotifyPlugin extends import_distube2.CustomPlugin {
                     return true;
                   }
                 }).map((r) => {
-                  const s = new import_distube2.Song(r, { member });
+                  const s = new import_distube2.Song(r, { member, metadata });
                   s.playlist = playlist;
                   return s;
                 });
